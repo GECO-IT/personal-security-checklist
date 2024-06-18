@@ -1,5 +1,4 @@
 import { useDocumentHead, useLocation } from "@builder.io/qwik-city";
-
 import { component$ } from "@builder.io/qwik";
 
 export const RouterHead = component$(() => {
@@ -10,8 +9,8 @@ export const RouterHead = component$(() => {
     <>
       {/* Basics */}
       <title>{head.title || 'Digital Defense - The ultimate personal security checklist to secure your digital life'}</title>
-      <meta name="description" content="The ultimate personal security checklist to secure your digital life" />
-      
+      <meta name="description" content={"The ultimate personal security checklist to secure your digital life"} />
+
       {/* Site config */}
       <link rel="canonical" href={loc.url.href} />
       <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -23,15 +22,15 @@ export const RouterHead = component$(() => {
       {/* Open Graph / Facebook */}
       <meta property="og:type" content="website" />
       <meta property="og:url" content={loc.url.href} />
-      <meta property="og:title" content="Digital Defense - The ultimate personal security checklist to secure your digital life" />
-      <meta property="og:description" content="The ultimate personal security checklist to secure your digital life" />
+      <meta property="og:title" content={head.title || "Digital Defense - The ultimate personal security checklist to secure your digital life"} />
+      <meta property="og:description" content={"The ultimate personal security checklist to secure your digital life"} />
       <meta property="og:image" content="/banner.png" />
 
       {/* Twitter */}
       <meta name="twitter:card" content="summary_large_image" />
       <meta name="twitter:url" content={loc.url.href} />
-      <meta name="twitter:title" content="Digital Defense - The ultimate personal security checklist to secure your digital life" />
-      <meta name="twitter:description" content="The ultimate personal security checklist to secure your digital life" />
+      <meta name="twitter:title" content={head.title || "Digital Defense - The ultimate personal security checklist to secure your digital life"} />
+      <meta name="twitter:description" content={"The ultimate personal security checklist to secure your digital life"} />
       <meta name="twitter:image" content="/banner.png" />
 
       {head.meta.map((m) => (
@@ -43,12 +42,13 @@ export const RouterHead = component$(() => {
       ))}
 
       {head.styles.map((s) => (
-        <style key={s.key} {...s.props} dangerouslySetInnerHTML={s.style} />
+        <style key={s.key} {...s.props}>{s.style}</style>
       ))}
 
       {head.scripts.map((s) => (
-        <script key={s.key} {...s.props} dangerouslySetInnerHTML={s.script} />
+        <script key={s.key} {...s.props}>{s.script}</script>
       ))}
+
       <script defer data-domain="digital-defense.io" src="https://no-track.as93.net/js/script.js"></script>
     </>
   );

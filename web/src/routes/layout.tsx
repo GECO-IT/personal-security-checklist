@@ -6,13 +6,25 @@ import Navbar from "~/components/furniture/nav";
 import Footer from "~/components/furniture/footer";
 import { ChecklistContext } from "~/store/checklist-context";
 import type { Sections } from "~/types/PSC";
+import path from "path";
+import fs from "fs/promises";
 
-export const useChecklists = routeLoader$(async ({ request }) => {
-  const localUrl = '/personal-security-checklist.yml';
-  return fetch(new URL(localUrl, request.url).toString())
-    .then((res) => res.text())
-    .then((res) => jsyaml.load(res) as Sections)
-    .catch(() => []);
+const filePath = path.resolve('public/personal-security-checklist.yml');
+
+export const useChecklists = routeLoader$(async () => {
+  try {
+    let yamlContent;
+    try {
+      yamlContent = await fs.readFile(filePath, 'utf-8');
+    } catch (error) {
+      console.error("Error reading checklists:", error);
+      return [];
+    }
+    return jsyaml.load(yamlContent) as Sections;
+  } catch (error) {
+    console.error("Error loading checklists:", error);
+    return [];
+  }
 });
 
 export const onGet: RequestHandler = async ({ cacheControl }) => {

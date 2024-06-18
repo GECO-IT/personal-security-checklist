@@ -29,5 +29,8 @@ export default defineConfig((): UserConfig => {
         "Cache-Control": "public, max-age=600",
       },
     },
+    ssr: {
+      external: ['path', 'fs']
+    },
   };
 });

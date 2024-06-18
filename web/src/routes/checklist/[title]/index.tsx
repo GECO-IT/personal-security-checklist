@@ -1,11 +1,21 @@
 import { component$, useContext } from '@builder.io/qwik';
 import { useLocation } from '@builder.io/qwik-city';
 import { marked } from 'marked';
-
+import type { StaticGenerateHandler } from '@builder.io/qwik-city';
 import Icon from '~/components/core/icon';
 import { ChecklistContext } from '~/store/checklist-context';
-import type { Section } from "~/types/PSC";
+import type { Section, Sections } from "~/types/PSC";
 import Table from '~/components/psc/checklist-table';
+import path from 'path';
+import fs from 'fs/promises';
+import yaml from 'js-yaml';
+
+const fetchChecklists = async (): Promise<Sections> => {
+  const filePath = path.resolve('./public/personal-security-checklist.yml');
+  const fileContents = await fs.readFile(filePath, 'utf-8');
+  const data: Section[] = yaml.load(fileContents) as Sections;
+  return data;
+};
 
 export default component$(() => {
 
@@ -53,3 +63,11 @@ export default component$(() => {
   );
 });
 
+export const onStaticGenerate: StaticGenerateHandler = async () => {
+  const checklists = await fetchChecklists();
+    return ({
+      params: checklists.map((section) => ({
+      title: section.slug,
+    })),
+  });
+};
