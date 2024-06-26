@@ -4,10 +4,12 @@ import { ChecklistContext } from '~/store/checklist-context';
 import { useLocalStorage } from "~/hooks/useLocalStorage";
 import { useChecklist } from '~/store/local-checklist-store';
 import type { Section } from "~/types/PSC";
+import { StaticGenerate, StaticGenerateHandler, useLocation } from "@builder.io/qwik-city";
 
 export default component$(() => {
   const checklists = useContext(ChecklistContext);
   const localChecklist = useChecklist();
+  const lang = useLocation().params.locale;
 
   const [completed, setCompleted] = useLocalStorage('PSC_PROGRESS', {});
 
@@ -45,7 +47,7 @@ export default component$(() => {
               })
               }
               <div class="card-actions justify-end">
-                <a href={`/checklist/${section.slug}`}>
+                <a href={`/${lang}/checklist/${section.slug}`}>
                   <button class={`btn text-base-100 bg-${section.color}-400 hover:bg-${section.color}-600`}>
                     View Full Checklist ➜
                   </button>
@@ -58,3 +60,12 @@ export default component$(() => {
     </main>
   );
 });
+
+export const onStaticGenerate: StaticGenerateHandler = async (): Promise<StaticGenerate> => {
+  return {
+      params: [
+          { locale: 'fr' },
+          { locale: 'en' }
+      ],
+  };
+};

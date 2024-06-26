@@ -1,5 +1,5 @@
 import { component$, useResource$, Resource } from "@builder.io/qwik";
-import type { DocumentHead } from "@builder.io/qwik-city";
+import type { DocumentHead, StaticGenerate, StaticGenerateHandler } from "@builder.io/qwik-city";
 
 import Icon from "~/components/core/icon";
 import { projects, socials, intro, contributing, license } from './about-content';
@@ -231,4 +231,13 @@ export const head: DocumentHead = {
       content: "This project aims to give you practical guidance on how to improve your digital security, and protect your privacy online",
     },
   ],
+};
+
+export const onStaticGenerate: StaticGenerateHandler = async (): Promise<StaticGenerate> => {
+  return {
+      params: [
+          { locale: 'fr' },
+          { locale: 'en' }
+      ],
+  };
 };

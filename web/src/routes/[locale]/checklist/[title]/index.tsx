@@ -65,9 +65,17 @@ export default component$(() => {
 
 export const onStaticGenerate: StaticGenerateHandler = async () => {
   const checklists = await fetchChecklists();
-    return ({
-      params: checklists.map((section) => ({
+  
+  const locales = ['fr', 'en'];
+  
+  const params = checklists.flatMap((section) =>
+    locales.map((locale) => ({
       title: section.slug,
-    })),
-  });
+      locale,
+    }))
+  );
+
+  return {
+    params,
+  };
 };

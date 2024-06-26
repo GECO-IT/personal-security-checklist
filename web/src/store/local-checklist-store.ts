@@ -6,8 +6,8 @@ import type { Sections } from '~/types/PSC';
 export const useChecklist = () => {
   const state = useStore<{ checklist: Sections | null }>({ checklist: null });
 
-  const fetchChecklist = $(async () => {
-    const localUrl = '/personal-security-checklist.yml';
+  const fetchChecklist = $(async (lang : string) => {
+    const localUrl =`/personal-security-checklist.${lang}.yml`;
     return fetch(localUrl)
       .then((res) => res.text())
       .then((yamlText) => {
@@ -16,7 +16,9 @@ export const useChecklist = () => {
   });
 
   useOnWindow('load', $(() => {
-    fetchChecklist().then((checklist) => {
+    const lang = (window.location.pathname).substring(1, 3);
+    console.log('lang:', lang);
+    fetchChecklist(lang).then((checklist) => {
       state.checklist = checklist as Sections;
     });
   }));

@@ -4,6 +4,7 @@ import { useLocalStorage } from "~/hooks/useLocalStorage";
 import type { Checklist, Section } from '~/types/PSC';
 import Icon from '~/components/core/icon';
 import styles from './psc.module.css';
+import { useLocation } from "@builder.io/qwik-city";
 
 export default component$((props: { sections: Section[] }) => {
 
@@ -14,6 +15,8 @@ export default component$((props: { sections: Section[] }) => {
   // Get the IDs of completed and ignore items from local storage
   const [checked] = useLocalStorage('PSC_PROGRESS', {});
   const [ignored] = useLocalStorage('PSC_IGNORED', {});
+
+  const lang = useLocation().params.locale;
 
   /**
    * Get the percentage of completion for a given section
@@ -39,14 +42,13 @@ export default component$((props: { sections: Section[] }) => {
       ).length
     ));
   }));
-
   return (
     <div class={[styles.container, 'grid',
       'mx-auto mt-8 px-4 gap-7', 'xl:px-10 xl:max-w-7xl',
       'transition-all', 'max-w-6xl w-full']}>
       {props.sections.map((section: Section, index: number) => (                   
         <a key={section.slug}
-          href={`/checklist/${section.slug}`}
+          href={`/${lang}/checklist/${section.slug}`}
           class={[
             'card card-side bg-front bg-opacity-25 shadow-md transition-all px-2',
             `outline-offset-2 outline-${section.color}-400`,

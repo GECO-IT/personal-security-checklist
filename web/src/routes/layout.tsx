@@ -9,20 +9,18 @@ import type { Sections } from "~/types/PSC";
 import path from "path";
 import fs from "fs/promises";
 
-const filePath = path.resolve('public/personal-security-checklist.yml');
-
-export const useChecklists = routeLoader$(async () => {
+export const useChecklists = routeLoader$(async ({ url }) => {
   try {
     let yamlContent;
+    const lang = url.pathname.substring(1, 3);
+    const filePath = path.resolve(`src/locales/personal-security-checklist.${lang}.yml`);
     try {
       yamlContent = await fs.readFile(filePath, 'utf-8');
     } catch (error) {
-      console.error("Error reading checklists:", error);
       return [];
     }
     return jsyaml.load(yamlContent) as Sections;
   } catch (error) {
-    console.error("Error loading checklists:", error);
     return [];
   }
 });

@@ -5,6 +5,7 @@ import type { Section } from '~/types/PSC';
 import { useTheme } from '~/store/theme-store';
 import articles from '~/data/articles';
 import { ChecklistContext } from '~/store/checklist-context';
+import { useLocation } from "@builder.io/qwik-city";
 
 
 export default component$(() => {
@@ -12,6 +13,8 @@ export default component$(() => {
   const data = useContext(ChecklistContext);
 
   const { theme, setTheme } = useTheme();
+
+  const lang = useLocation().params.locale;
 
   const themes = [
     'dark', 'light', 'night', 'cupcake', 
@@ -21,7 +24,7 @@ export default component$(() => {
   ];
 
     const deleteAllData = $(() => {
-    const isConfirmed = confirm('Are you sure you want to delete all local data? This will erase your progress.');
+    const isConfirmed = confirm("Are you sure you want to delete all local data? This will erase your progress.");
     if (isConfirmed) {
       localStorage.clear();
       location.reload();
@@ -38,13 +41,30 @@ export default component$(() => {
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="inline-block w-6 h-6 stroke-current"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
             </label>
           </div> 
-          <a href="/" class="btn btn-ghost text-xl flex capitalize">
+          <a href={`/${lang}`} class="btn btn-ghost text-xl flex capitalize">
             <label for="my-drawer-3" aria-label="open sidebar" class="tooltip tooltip-bottom" data-tip="View all Pages"><Icon class="mr-2" icon="shield" width={28} height={28}  /></label>
             <h1>Digital Defense</h1>
           </a>
         </div>
         <div class="flex-none hidden md:flex">
           <ul class="menu menu-horizontal px-1">
+          <li>
+              <details>
+                <summary>
+                  <Icon icon="browser" width={16} height={16}  />
+                   Languages
+                </summary>
+                <ul class="p-2 bg-base-100 rounded-t-none z-10">
+                    <li>
+                      <a href={`/en`}>Anglais</a>
+                    </li>
+                    <li>
+                      <a href={`/fr`}>Français</a>
+                    </li>
+                </ul>
+              </details>
+            </li>
+            
             <li>
               <details>
                 <summary>
@@ -54,7 +74,7 @@ export default component$(() => {
                 <ul class="p-2 bg-base-100 rounded-t-none z-10">
                   {data.value.map((item: Section, index: number) => (
                     <li key={`checklist-nav-${index}`} class={`hover:bg-${item.color}-600 hover:bg-opacity-15`}>
-                      <a href={`/checklist/${item.slug}`}>
+                      <a href={`/${lang}/checklist/${item.slug}`}>
                       <Icon color={item.color} class="mr-2" icon={item.icon} width={16} height={16}  />
                         {item.title}
                       </a>
@@ -101,16 +121,16 @@ export default component$(() => {
           <Icon class="mr-2" icon="shield" width={16} height={16}  />
             Digital Defense
           </h2>
-          <li><a href="/"><Icon class="mr-2" icon="homepage" width={16} height={16}  />Home</a></li>
+          <li><a href={`/${lang}`}><Icon class="mr-2" icon="homepage" width={16} height={16}  />Home</a></li>
           <li><a href="https://github.com/lissy93/personal-security-checklist">
             <Icon class="mr-2" icon="github" width={16} height={16}  />GitHub</a>
           </li>
           <li>
-            <a href="/checklist"><Icon class="mr-2" icon="all" width={16} height={16} />Checklists</a>
+            <a href={`/${lang}/checklist/`}><Icon class="mr-2" icon="all" width={16} height={16} />Checklists</a>
             <ul>
               {data.value.map((item: Section, index: number) => (
               <li key={`checklist-side-${index}`} class={`hover:bg-${item.color}-600 hover:bg-opacity-15`}>
-                <a href={`/checklist/${item.slug}`}>
+                <a href={`/${lang}/checklist/${item.slug}`}>
                 <Icon color={item.color} class="mr-2" icon={item.icon} width={16} height={16}  />
                   {item.title}
                 </a>
@@ -119,19 +139,19 @@ export default component$(() => {
             </ul>
           </li>
           <li>
-            <a href="/article">
+            <a href={'/'+lang+'/article'}>
               <Icon class="mr-2" icon="articles" width={16} height={16} />Articles
             </a>
             <ul>
               {articles.map(article => (
                 <li key={article.slug}>
-                  <a href={`/article/${article.slug}`}>{article.title}</a>
+                  <a href={'/'+lang+`/article/${article.slug}`}>{article.title}</a>
                 </li>
               ))}
             </ul>
           </li>
           <li>
-            <a href="/about">
+            <a href={`/${lang}/about`}>
               <Icon class="mr-2" icon="about" width={16} height={16} />About
             </a>
             <ul>

@@ -122,12 +122,17 @@ export const head: DocumentHead = {
 };
 
 export const onStaticGenerate: StaticGenerateHandler = async () => {
-return ({
-params: articles.map((article) => ({
-title: article.title,
-description : article.description,
-slug : article.slug,
-markdown : article.markdown,
-})),
-});
+  
+  const locales = ['fr', 'en'];
+  
+  const params = articles.flatMap((article) =>
+    locales.map((locale) => ({
+      slug: article.slug,
+      locale,
+    }))
+  );
+
+  return {
+    params,
+  };
 };

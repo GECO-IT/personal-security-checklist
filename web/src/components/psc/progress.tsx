@@ -5,6 +5,7 @@ import { useLocalStorage } from "~/hooks/useLocalStorage";
 import { ChecklistContext } from "~/store/checklist-context";
 import type { Priority, Sections, Section } from '~/types/PSC';
 import Icon from '~/components/core/icon';
+import { useLocation } from "@builder.io/qwik-city";
 
 /**
  * Component for client-side user progress metrics.
@@ -28,6 +29,8 @@ export default component$(() => {
   const radarChart  = useSignal<HTMLCanvasElement>();
   // Completion data for each section
   const sectionCompletion =  useSignal<number[]>([]);
+
+  const lang = useLocation().params.locale;
 
   /**
    * Calculates the users progress over specified sections.
@@ -348,7 +351,7 @@ export default component$(() => {
           { checklists.value.map((section: Section, index: number) => (
               <li key={index}>
                 <a
-                  href={`/checklist/${section.slug}`}
+                  href={`/${lang}/checklist/${section.slug}`}
                   class={[
                     'my-2 w-80 flex justify-between items-center tooltip transition',
                     `hover:text-${section.color}-400`
