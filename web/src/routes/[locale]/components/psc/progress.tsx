@@ -3,9 +3,10 @@ import { Chart, registerables } from 'chart.js';
 
 import { useLocalStorage } from "~/hooks/useLocalStorage";
 import { ChecklistContext } from "~/store/checklist-context";
-import type { Priority, Sections, Section } from '~/types/PSC';
-import Icon from '~/components/core/icon';
+import type { Priority, Sections, Section } from '~/routes/[locale]/types/PSC';
+import Icon from '~/routes/[locale]/components/core/icon';
 import { useLocation } from "@builder.io/qwik-city";
+import {strings} from '~/locales/strings';
 
 /**
  * Component for client-side user progress metrics.
@@ -277,9 +278,9 @@ export default component$(() => {
   }));
 
   const items = [
-    { id: 'essential-container', label: 'Essential' },
-    { id: 'optional-container', label: 'Optional' },
-    { id: 'advanced-container', label: 'Advanced' },
+    { id: 'essential-container', label: `${strings[lang]?.essential}` },
+    { id: 'optional-container', label: `${strings[lang]?.optional}` },
+    { id: 'advanced-container', label: `${strings[lang]?.advanced}` },
   ];
 
   // Beware, some god-awful markup ahead (thank Tailwind for that!)
@@ -303,9 +304,13 @@ export default component$(() => {
     <div class="flex justify-center flex-col items-center gap-6">
       {/* Progress Percent */}
       <div class="rounded-box bg-front shadow-md w-96 p-4">
-        <h3 class="text-primary text-2xl">Your Progress</h3>
+        <h3 class="text-primary text-2xl">{strings[lang]?.progress}</h3>
         <p class="text-lg">
-          You've completed <b>{totalProgress.value.completed} out of {totalProgress.value.outOf}</b> items
+        {strings[lang]?.completion.split("{completed}")[0]}
+        <b>{totalProgress.value.completed}</b>
+        {strings[lang]?.completion.split("{completed}")[1].split("{outOf}")[0]}
+        <b>{totalProgress.value.outOf}</b>
+        {strings[lang]?.completion.split("{outOf}")[1]}
         </p>
         <progress
           class="progress w-80"
@@ -329,12 +334,10 @@ export default component$(() => {
       {/* Something ??? */}
       <div class="p-4 rounded-box bg-front shadow-md w-96 flex-grow">
         <p class="text-sm opacity-80 mb-2">
-          Next up, consider switching to more secure and
-          privacy-respecting apps and services.
+        {strings[lang]?.privacyAppsRecommendation}
         </p>
         <p class="text-lg">
-          View our directory of recommended software,
-          at <a class="link link-secondary font-bold" href="https://awesome-privacy.xyz">awesome-privacy.xyz</a>
+       {strings[lang]?.recommendedSoftware} <a class="link link-secondary font-bold" href="https://awesome-privacy.xyz">awesome-privacy.xyz</a>
         </p>
       </div>
     </div>

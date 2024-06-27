@@ -1,7 +1,7 @@
 
 import { $, useStore, useOnWindow } from '@builder.io/qwik';
 import jsyaml from 'js-yaml';
-import type { Sections } from '~/types/PSC';
+import type { Sections } from '~/routes/[locale]/types/PSC';
 
 export const useChecklist = () => {
   const state = useStore<{ checklist: Sections | null }>({ checklist: null });

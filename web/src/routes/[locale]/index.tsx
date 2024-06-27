@@ -1,9 +1,9 @@
 import { component$, useContext } from '@builder.io/qwik';
 import { StaticGenerate, StaticGenerateHandler, type DocumentHead } from "@builder.io/qwik-city";
 
-import Hero from "~/components/furniture/hero";
-import SectionLinkGrid from "~/components/psc/section-link-grid";
-import Progress from "~/components/psc/progress";
+import Hero from "~/routes/[locale]/components/furniture/hero";
+import SectionLinkGrid from "~/routes/[locale]/components/psc/section-link-grid";
+import Progress from "~/routes/[locale]/components/psc/progress";
 
 import { ChecklistContext } from '~/store/checklist-context';
 

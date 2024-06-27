@@ -2,10 +2,10 @@ import { component$, useContextProvider, Slot } from "@builder.io/qwik";
 import { routeLoader$, type RequestHandler } from "@builder.io/qwik-city";
 import jsyaml from "js-yaml";
 
-import Navbar from "~/components/furniture/nav";
-import Footer from "~/components/furniture/footer";
+import Navbar from "~/routes/[locale]/components/furniture/nav";
+import Footer from "~/routes/[locale]/components/furniture/footer";
 import { ChecklistContext } from "~/store/checklist-context";
-import type { Sections } from "~/types/PSC";
+import type { Sections } from "~/routes/[locale]/types/PSC";
 import path from "path";
 import fs from "fs/promises";
 

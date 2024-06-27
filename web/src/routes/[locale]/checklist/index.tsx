@@ -3,7 +3,7 @@ import { component$, useContext } from "@builder.io/qwik";
 import { ChecklistContext } from '~/store/checklist-context';
 import { useLocalStorage } from "~/hooks/useLocalStorage";
 import { useChecklist } from '~/store/local-checklist-store';
-import type { Section } from "~/types/PSC";
+import type { Section } from "~/routes/[locale]/types/PSC";
 import { StaticGenerate, StaticGenerateHandler, useLocation } from "@builder.io/qwik-city";
 
 export default component$(() => {

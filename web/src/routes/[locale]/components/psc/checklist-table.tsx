@@ -1,11 +1,13 @@
 import { $, component$, useStore, useSignal } from "@builder.io/qwik";
 import { useCSSTransition } from "qwik-transition";
 
-import Icon from "~/components/core/icon";
+import Icon from "~/routes/[locale]/components/core/icon";
 import type { Priority, Section, Checklist } from '../../types/PSC';
 import { marked } from "marked";
 import { useLocalStorage } from "~/hooks/useLocalStorage";
 import styles from './psc.module.css';
+import { useLocation } from "@builder.io/qwik-city";
+import {strings} from '~/locales/strings';
 
 
 export default component$((props: { section: Section }) => {
@@ -19,6 +21,8 @@ export default component$((props: { section: Section }) => {
   const sortState = useStore({ column: '', ascending: true });
 
   const checklist = useSignal<Checklist[]>(props.section.checklist);
+
+  const lang = useLocation().params.locale;
 
   const originalFilters = {
     show: 'all', // 'all', 'remaining', 'completed'
@@ -151,20 +155,20 @@ export default component$((props: { section: Section }) => {
       <div>
         <progress class="progress w-64" value={percent} max="100"></progress>
         <p class="text-xs text-center">
-          {done} out of {total} ({percent}%)
-          complete, {disabled} ignored</p>
+        {strings[lang]?.checklistCompletion.replace("{done}", done.toString()).replace("{total}", total.toString()).replace("{percent}",percent.toString()).replace("{disabled}", disabled.toString())}
+        </p>
       </div>
 
       <div class="flex flex-wrap gap-2 justify-end my-4">
         {(sortState.column || JSON.stringify(filterState) !== JSON.stringify(originalFilters)) && (
           <button class="btn btn-sm hover:btn-primary" onClick$={resetFilters}>
             <Icon width={18} height={16} icon="clear"/>
-            Reset Filters
+            {strings[lang]?.resetFilters}
           </button>
         )}
         <button class="btn btn-sm hover:btn-primary" onClick$={() => { showFilters.value = !showFilters.value; }}>
           <Icon width={18} height={16} icon="filters"/>
-          {showFilters.value ? 'Hide' : 'Show'} Filters
+          {showFilters.value ? `${strings[lang]?.hide}` : `${strings[lang]?.show}`} {strings[lang]?.filters}
         </button>
       </div>
     </div>
@@ -174,28 +178,28 @@ export default component$((props: { section: Section }) => {
         style={{ opacity: stage.value === "enterTo" ? 1 : 0, height: stage.value === "enterTo" ? 'auto' : 0 }}> 
         {/* Filter by completion */}
         <div class="flex justify-end items-center gap-1">
-          <p class="font-bold text-sm">Show</p>
+          <p class="font-bold text-sm">{strings[lang]?.show}</p>
           <label onClick$={() => (filterState.show = 'all')}
             class="p-2 rounded hover:bg-front transition-all cursor-pointer flex gap-2">
-            <span class="text-sm">All</span> 
+            <span class="text-sm">{strings[lang].all}</span> 
             <input type="radio" name="show" class="radio radio-sm checked:radio-info" checked />
           </label>
           <label onClick$={() => (filterState.show = 'remaining')}
             class="p-2 rounded hover:bg-front transition-all cursor-pointer flex gap-2">
-            <span class="text-sm">Remaining</span> 
+            <span class="text-sm">{strings[lang]?.remaining}</span> 
             <input type="radio" name="show" class="radio radio-sm checked:radio-error" />
           </label>
           <label onClick$={() => (filterState.show = 'completed')}
             class="p-2 rounded hover:bg-front transition-all cursor-pointer flex gap-2">
-            <span class="text-sm">Completed</span> 
+            <span class="text-sm">{strings[lang]?.completed}</span> 
             <input type="radio" name="show" class="radio radio-sm checked:radio-success" />
           </label>
         </div>
         {/* Filter by level */}
         <div class="flex justify-end items-center gap-1">
-          <p class="font-bold text-sm">Filter</p>
+          <p class="font-bold text-sm">{strings[lang]?.filter}</p>
           <label class="p-2 rounded hover:bg-front transition-all cursor-pointer flex gap-2">
-            <span class="text-sm">Basic</span> 
+            <span class="text-sm">{strings[lang]?.essential}</span> 
             <input
               type="checkbox"
               checked={filterState.levels.essential}
@@ -204,7 +208,7 @@ export default component$((props: { section: Section }) => {
             />
           </label>
           <label class="p-2 rounded hover:bg-front transition-all cursor-pointer flex gap-2">
-            <span class="text-sm">Optional</span> 
+            <span class="text-sm">{strings[lang]?.optional}</span> 
             <input
               type="checkbox"
               checked={filterState.levels.optional}
@@ -214,7 +218,7 @@ export default component$((props: { section: Section }) => {
           </label>
           <label
             class="p-2 rounded hover:bg-front transition-all cursor-pointer flex gap-2">
-            <span class="text-sm">Advanced</span> 
+            <span class="text-sm">{strings[lang]?.advanced}</span> 
             <input
               type="checkbox"
               checked={filterState.levels.advanced}
@@ -230,9 +234,9 @@ export default component$((props: { section: Section }) => {
       <thead>
         <tr>
           { [
-            { id: 'done', text: 'Done?'},
-            { id: 'advice', text: 'Advice' },
-            { id: 'level', text: 'Level' }
+            { id: 'done', text: `${strings[lang]?.done}`},
+            { id: 'advice', text: `${strings[lang]?.advice}` },
+            { id: 'level', text: `${strings[lang]?.level}` }
           ].map((item) => (
             <th
               key={item.id}
@@ -274,7 +278,7 @@ export default component$((props: { section: Section }) => {
                     setCompleted(data);
                   }}
                 />
-                <label for={`ignore-${itemId}`} class="text-small block opacity-50 mt-2">Ignore</label>
+                <label for={`ignore-${itemId}`} class="text-small block opacity-50 mt-2">{strings[lang]?.ignore}</label>
                 <input
                   type="checkbox"
                   id={`ignore-${itemId}`}

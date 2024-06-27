@@ -1,4 +1,3 @@
-
 export interface PersonalSecurityChecklist {
   sections: Section[],
 }

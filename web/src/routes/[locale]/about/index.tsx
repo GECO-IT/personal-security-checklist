@@ -1,7 +1,7 @@
 import { component$, useResource$, Resource } from "@builder.io/qwik";
 import type { DocumentHead, StaticGenerate, StaticGenerateHandler } from "@builder.io/qwik-city";
 
-import Icon from "~/components/core/icon";
+import Icon from "~/routes/[locale]/components/core/icon";
 import { projects, socials, intro, contributing, license } from './about-content';
 import { marked } from "marked";
 

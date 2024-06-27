@@ -1,20 +1,25 @@
 
 import { $, component$, useContext } from "@builder.io/qwik";
-import Icon from "~/components/core/icon";
-import type { Section } from '~/types/PSC';
+import Icon from "~/routes/[locale]/components/core/icon";
+import type { Section } from '~/routes/[locale]/types/PSC';
 import { useTheme } from '~/store/theme-store';
 import articles from '~/data/articles';
 import { ChecklistContext } from '~/store/checklist-context';
 import { useLocation } from "@builder.io/qwik-city";
+import {strings} from '~/locales/strings';
+
 
 
 export default component$(() => {
 
   const data = useContext(ChecklistContext);
 
+
+
   const { theme, setTheme } = useTheme();
 
   const lang = useLocation().params.locale;
+
 
   const themes = [
     'dark', 'light', 'night', 'cupcake', 
@@ -43,7 +48,7 @@ export default component$(() => {
           </div> 
           <a href={`/${lang}`} class="btn btn-ghost text-xl flex capitalize">
             <label for="my-drawer-3" aria-label="open sidebar" class="tooltip tooltip-bottom" data-tip="View all Pages"><Icon class="mr-2" icon="shield" width={28} height={28}  /></label>
-            <h1>Digital Defense</h1>
+            <h1>{strings[lang]?.title}</h1>
           </a>
         </div>
         <div class="flex-none hidden md:flex">
@@ -52,14 +57,14 @@ export default component$(() => {
               <details>
                 <summary>
                   <Icon icon="browser" width={16} height={16}  />
-                   Languages
+                   {strings[lang]?.languages}
                 </summary>
                 <ul class="p-2 bg-base-100 rounded-t-none z-10">
                     <li>
-                      <a href={`/en`}>Anglais</a>
+                      <a href={`/en`}>{strings[lang]?.english}</a>
                     </li>
                     <li>
-                      <a href={`/fr`}>Français</a>
+                      <a href={`/fr`}>{strings[lang]?.french}</a>
                     </li>
                 </ul>
               </details>
@@ -69,7 +74,7 @@ export default component$(() => {
               <details>
                 <summary>
                   <Icon icon="checklist" width={16} height={16}  />
-                  Checklists
+                  {strings[lang]?.checklists}
                 </summary>
                 <ul class="p-2 bg-base-100 rounded-t-none z-10">
                   {data.value.map((item: Section, index: number) => (
@@ -119,14 +124,14 @@ export default component$(() => {
         <ul class="rounded-box menu p-4 w-80 min-h-full bg-base-200">
           <h2 class="flex text-primary">
           <Icon class="mr-2" icon="shield" width={16} height={16}  />
-            Digital Defense
+            {strings[lang]?.title}
           </h2>
-          <li><a href={`/${lang}`}><Icon class="mr-2" icon="homepage" width={16} height={16}  />Home</a></li>
+          <li><a href={`/${lang}`}><Icon class="mr-2" icon="homepage" width={16} height={16}  />{strings[lang]?.home}</a></li>
           <li><a href="https://github.com/lissy93/personal-security-checklist">
             <Icon class="mr-2" icon="github" width={16} height={16}  />GitHub</a>
           </li>
           <li>
-            <a href={`/${lang}/checklist/`}><Icon class="mr-2" icon="all" width={16} height={16} />Checklists</a>
+            <a href={`/${lang}/checklist/`}><Icon class="mr-2" icon="all" width={16} height={16} />{strings[lang]?.checklists}</a>
             <ul>
               {data.value.map((item: Section, index: number) => (
               <li key={`checklist-side-${index}`} class={`hover:bg-${item.color}-600 hover:bg-opacity-15`}>
@@ -140,7 +145,7 @@ export default component$(() => {
           </li>
           <li>
             <a href={'/'+lang+'/article'}>
-              <Icon class="mr-2" icon="articles" width={16} height={16} />Articles
+              <Icon class="mr-2" icon="articles" width={16} height={16} />{strings[lang]?.articles}
             </a>
             <ul>
               {articles.map(article => (
@@ -152,23 +157,23 @@ export default component$(() => {
           </li>
           <li>
             <a href={`/${lang}/about`}>
-              <Icon class="mr-2" icon="about" width={16} height={16} />About
+              <Icon class="mr-2" icon="about" width={16} height={16} />{strings[lang]?.about}
             </a>
             <ul>
               <li>
-                <a href="https://github.com/Lissy93/personal-security-checklist/?tab=readme-ov-file#contributing">Contributing</a>
+                <a href="https://github.com/Lissy93/personal-security-checklist/?tab=readme-ov-file#contributing">{strings[lang]?.contributing}</a>
               </li>
               <li>
-                <a href="https://github.com/Lissy93/personal-security-checklist/blob/master/LICENSE">License</a>
+                <a href="https://github.com/Lissy93/personal-security-checklist/blob/master/LICENSE">{strings[lang]?.license}</a>
               </li>
             </ul>
             <ul>
             <li>
-              <a href="/about#author">Author</a>
+              <a href={`/${lang}/about#author`}>{strings[lang]?.author}</a>
               <ul>
-                <li><a href="https://aliciasykes.com/contact">Contact</a></li>
+                <li><a href="https://aliciasykes.com/contact">{strings[lang]?.contact}</a></li>
                 <li>
-                  <a href="https://apps.aliciasykes.com">More Apps</a>
+                  <a href="https://apps.aliciasykes.com">{strings[lang]?.moreApps}</a>
                 </li>
                 <li class="flex flex-row">
                   <a href="https://github.com/lissy93"><Icon icon="hub" width={16} height={16} /></a>
@@ -187,18 +192,18 @@ export default component$(() => {
       <dialog id="settings_modal" class="modal">
         <div class="modal-box">
           <div class="tabs tabs-lifted">
-            <p class="tab tab-active">Settings</p>
-            <a class="tab" href="/about">About</a>
+            <p class="tab tab-active">{strings[lang]?.settings}</p>
+            <a class="tab" href="/about">{strings[lang]?.about}</a>
           </div>
           <div class="modal-action justify-start w-full flex flex-col gap-4">
               <div class="flex items-between w-full justify-between">
-                <label for="theme" class="label">Theme</label>
+                <label for="theme" class="label">{strings[lang]?.theme}</label>
                 <select 
                   id="theme" 
                   class="select select-bordered w-full max-w-xs"
                   onChange$={(event) => setTheme((event.target as HTMLSelectElement).value) }
                   >
-                  <option disabled selected>Theme</option>
+                  <option disabled selected>{strings[lang]?.theme}</option>
                   {themes.map((someTheme) => (
                     <option
                       key={someTheme}
@@ -211,13 +216,13 @@ export default component$(() => {
                 </select>
               </div>
               <div class="flex items-between w-full justify-between">
-                <label class="label">Data</label>
-                <button class="btn btn-primary" onClick$={deleteAllData}>Delete All</button>
+                <label class="label">{strings[lang]?.data}</label>
+                <button class="btn btn-primary" onClick$={deleteAllData}>{strings[lang]?.delete_all}</button>
               </div>
               <button
                 class="btn my-1 mx-auto"
                 onClick$={() => ((document.getElementById('settings_modal') || {}) as HTMLDialogElement).close()}
-              >Close</button>
+              >{strings[lang]?.close}</button>
             </div>
         </div>
       </dialog>

@@ -4,7 +4,7 @@ import {
   RouterOutlet,
   ServiceWorkerRegister,
 } from "@builder.io/qwik-city";
-import { RouterHead } from "./components/router-head/router-head";
+import { RouterHead } from "./routes/[locale]/components/router-head/router-head";
 
 import tailwind from './styles/tailwind.css?inline';
 
