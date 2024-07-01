@@ -1,17 +1,35 @@
-export const intro = [
-  `The objective of this project is to give you practical guidance on how to improve your digital security, and protect your privacy online.`,
-  `
-  The checklist is a living document, and will be updated regularly to reflect the latest threats and best practices.
-  This is made possible by open sourcing the content, and making it a community maintained resource,
-  meaning that anyone can suggest changes, make additions or update the guidance.
-  All edits are then reviewed by maintainers before being merged and going live.
-  `];
+export const intro: { [key: string]: string[] } = {
+  en: [
+    `The objective of this project is to give you practical guidance on how to improve your digital security, and protect your privacy online.`,
+    `
+    The checklist is a living document, and will be updated regularly to reflect the latest threats and best practices.
+    This is made possible by open sourcing the content, and making it a community maintained resource,
+    meaning that anyone can suggest changes, make additions or update the guidance.
+    All edits are then reviewed by maintainers before being merged and going live.`
+  ],
+  fr: [
+    `L'objectif de ce projet est de vous donner des conseils pratiques sur la manière d'améliorer votre sécurité numérique et de protéger votre vie privée en ligne.`,
+    `
+    La liste de contrôle est un document vivant et sera régulièrement mis à jour pour refleter les dernières menaces et les meilleures pratiques.
+    Cela est rendu possible en open sourçant le contenu et en en faisant une ressource maintenue par la communauté,
+    ce qui signifie que n'importe qui peut suggérer des modifications, ajouter des éléments ou mettre à jour les conseils.
+    Toutes les modifications sont ensuite examinées par les mainteneurs avant d'être fusionnées et mises en ligne.`
+  ],
+};
 
-export const contributing = [
+export const contributing : { [key: string]: string[] } = {
+  en : [
   `This project is only possible thanks to contributors like you!`,
   `You can make changes to any of the checklist content, by editing `
   + `[\`personal-security-checklist.yml\`](https://github.com/Lissy93/personal-security-checklist/blob/master/personal-security-checklist.yml)`,
-];
+  ],
+  fr : [
+  `Ce projet n'est possible que grâce à des contributeurs comme vous !`,
+  `Vous pouvez apporter des modifications à l'un des contenus de la liste de contrôle, en éditant `
+  + `[\`personal-security-checklist.yml\`](https://github.com/Lissy93/personal-security-checklist/blob/master/personal-security-checklist.yml)`,
+  ],
+  
+};
 
 export const projects = [
   {

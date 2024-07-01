@@ -95,7 +95,7 @@ export default component$(() => {
               </a>
             </li>
           </ul>
-          <div class="tooltip tooltip-bottom" data-tip="Theme">
+          <div class="tooltip tooltip-bottom" data-tip={strings[lang]?.theme}>
             <label class="cursor-pointer grid place-items-center">
               <input
                 type="checkbox"
@@ -112,7 +112,7 @@ export default component$(() => {
           <li class="list-none px-2">
             <p
               onClick$={() => ((document.getElementById('settings_modal') || {}) as HTMLDialogElement).showModal()}
-              class="cursor-pointer tooltip flex tooltip-bottom" data-tip="Settings">
+              class="cursor-pointer tooltip flex tooltip-bottom" data-tip={strings[lang]?.settings}>
                 <Icon icon="settings" width={20} height={20}  />
             </p>
           </li>
@@ -148,7 +148,7 @@ export default component$(() => {
               <Icon class="mr-2" icon="articles" width={16} height={16} />{strings[lang]?.articles}
             </a>
             <ul>
-              {articles.map(article => (
+              {articles[lang]?.map(article => (
                 <li key={article.slug}>
                   <a href={'/'+lang+`/article/${article.slug}`}>{article.title}</a>
                 </li>
@@ -193,7 +193,7 @@ export default component$(() => {
         <div class="modal-box">
           <div class="tabs tabs-lifted">
             <p class="tab tab-active">{strings[lang]?.settings}</p>
-            <a class="tab" href="/about">{strings[lang]?.about}</a>
+            <a class="tab" href={`/${lang}/about`}>{strings[lang]?.about}</a>
           </div>
           <div class="modal-action justify-start w-full flex flex-col gap-4">
               <div class="flex items-between w-full justify-between">

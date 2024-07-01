@@ -9,9 +9,9 @@ import type { StaticGenerateHandler } from '@builder.io/qwik-city';
 export default component$(() => {
   const location = useLocation();
   const store = useStore({ article: null, notFound: false });
-
+  const lang = location.params.locale;
   const slug = location.params.slug;
-  const article = articles.find(a => a.slug === slug);
+  const article = articles[lang]?.find(a => a.slug === slug);
 
   // useDocumentHead(() => {
   //   if (!article) {
@@ -124,9 +124,10 @@ export const head: DocumentHead = {
 export const onStaticGenerate: StaticGenerateHandler = async () => {
   
   const locales = ['fr', 'en'];
+  const allArticles = locales.flatMap(locale => articles[locale]);
   
-  const params = articles.flatMap((article) =>
-    locales.map((locale) => ({
+  const params = allArticles.flatMap(article =>
+    locales.map(locale => ({
       slug: article.slug,
       locale,
     }))

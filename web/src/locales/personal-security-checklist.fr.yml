@@ -124,7 +124,7 @@
     - title: 2-Factor Authentication
       url: https://github.com/Lissy93/awesome-privacy#2-factor-authentication
 
-- title: Navigation sur le Web
+- title: Navigation web
   slug: web-browsing
   description: Avoiding tracking, censorship, and data collection online
   icon: browser

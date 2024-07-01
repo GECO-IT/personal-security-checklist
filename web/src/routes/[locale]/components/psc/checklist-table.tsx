@@ -249,7 +249,7 @@ export default component$((props: { section: Section }) => {
               </span>
             </th>
           ))}
-          <th>Details</th>
+          <th>{strings[lang]?.details}</th>
         </tr>
       </thead>
       <tbody>

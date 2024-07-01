@@ -1,12 +1,14 @@
 import { component$, useResource$, Resource } from "@builder.io/qwik";
-import type { DocumentHead, StaticGenerate, StaticGenerateHandler } from "@builder.io/qwik-city";
+import { useLocation, type DocumentHead, type StaticGenerate, type StaticGenerateHandler } from "@builder.io/qwik-city";
 
 import Icon from "~/routes/[locale]/components/core/icon";
 import { projects, socials, intro, contributing, license } from './about-content';
-import { marked } from "marked";
+import { marked, use } from "marked";
+import { strings } from "~/locales/strings";
 
 export default component$(() => {
 
+  const lang = useLocation().params.locale;
   interface Contributor {
     login: string;
     avatar_url: string;
@@ -42,29 +44,29 @@ export default component$(() => {
   return (
     <div class="m-4 md:mx-16">
       <article class="bg-back p-8 mx-auto max-w-[1200px] m-8 rounded-lg shadow-md">
-        <h2 class="text-3xl mb-2">About the Security Checklist</h2>
-        {intro.map((paragraph, index) => (
+        <h2 class="text-3xl mb-2">{strings[lang]?.aboutPsc}</h2>
+        {intro[lang]?.map((paragraph, index) => (
           <p class="mb-2" key={index}>{paragraph}</p>
         ))}        
       </article>
       <div class="divider"></div>
 
       <article class="bg-back p-8 mx-auto max-w-[1200px] m-8 rounded-lg shadow-md">
-        <h2 class="text-3xl mb-2">Contributing</h2>
-        {contributing.map((paragraph, index) => (
+        <h2 class="text-3xl mb-2">{strings[lang]?.contributing}</h2>
+        {contributing[lang]?.map((paragraph, index) => (
           <p class="mb-2" key={index} dangerouslySetInnerHTML={parseMarkdown(paragraph)}></p>
         ))}        
       </article>
       <div class="divider"></div>
 
       <article class="bg-back p-8 mx-auto max-w-[1200px] m-8 rounded-lg shadow-md">
-        <h2 class="text-3xl mb-2">Acknowledgments</h2>
+        <h2 class="text-3xl mb-2">{strings[lang]?.acknowledgments}</h2>
 
 
-        <h3 class="text-2xl mb-2">Sponsors</h3>
+        <h3 class="text-2xl mb-2">{strings[lang]?.sponsors}</h3>
 
         <p>
-          Huge thanks to the following sponsors, for their ongoing support 💖
+          {strings[lang]?.thanksSponsors}
         </p>
 
         <div class="flex flex-wrap gap-4 my-4 mx-auto">
@@ -98,10 +100,10 @@ export default component$(() => {
 
         <div class="divider"></div>
 
-        <h3 class="text-2xl mb-2">Contributors</h3>
+        <h3 class="text-2xl mb-2">{strings[lang]?.contributors}</h3>
         <p>
-          This project exists thanks to all the people who've helped build and maintain it.<br />
-          Special thanks to the below, top-100 contributors 🌟
+          {strings[lang]?.thanksContributors.split("{br}")[0]}<br />
+          {strings[lang]?.thanksContributors.split("{br}")[1]}
         </p>
         <div class="flex flex-wrap gap-4 my-4 mx-auto">
           <Resource
@@ -136,7 +138,7 @@ export default component$(() => {
       <div class="divider"></div>
 
       <article class="bg-back p-8 mx-auto max-w-[1200px] my-8 rounded-lg shadow-md">
-        <h2 class="text-3xl mb-2" id="author">About the Author</h2>
+        <h2 class="text-3xl mb-2" id="author">{strings[lang]?.aboutAuthor}</h2>
           <p>
             This project was originally started by
             me, <a href="https://aliciasykes.com" class="link link-primary">Alicia Sykes</a>

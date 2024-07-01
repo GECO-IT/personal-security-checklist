@@ -11,7 +11,7 @@ export default component$(() => {
         
       <h2 class="text-4xl mb-4">Articles</h2>
       <ul class="flex flex-col gap-4">
-        {articles.map(article => (
+        {articles[lang]?.map(article => (
           <li key={article.slug}
             class="rounded-box bg-front shadow-md p-4 max-w-96 drop-shadow-md
             transition hover:drop-shadow-xl hover:scale-105"
